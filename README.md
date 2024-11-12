@@ -47,7 +47,4 @@ The `.gitignore` file specifies the files and directories that should be ignored
 
 terraform init
 
-<<<<<<< HEAD
-terraform apply
-=======
 terraform apply
