@@ -45,6 +45,8 @@ The `.gitignore` file specifies the files and directories that should be ignored
 
 1. Clone the repository:
 
-terraform init
-
-terraform apply
+   ```sh
+   git clone https://github.com/iwindon/kubecluster.git
+   cd kubecluster
+   terraform init
+   terraform apply
