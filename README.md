@@ -43,3 +43,5 @@ The `output.tf` file defines the output values for the Terraform configuration. 
    dnf install genisoimage
    dnf install terraform
    cd kubecluster
+   terraform init
+   terraform apply
