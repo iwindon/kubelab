@@ -19,14 +19,14 @@ resource "libvirt_volume" "rhel_image_node2" {
   format = "qcow2"
 }
 
-data "template_file" "cloud_init" {
-  template = file("${path.module}/cloud_init.cfg")
+data "template_file" "user_data" {
+  template = "${file("${path.module}/cloud_init.cfg")}"
 }
 
 resource "libvirt_cloudinit_disk" "commoninit" {
   name           = "commoninit.iso"
   pool           = "default"
-  user_data      = data.template_file.cloud_init.rendered
+  user_data      = "${data.template_file.user_data.rendered}"
 }
 
 resource "libvirt_domain" "k8s_master" {
@@ -39,9 +39,9 @@ resource "libvirt_domain" "k8s_master" {
   disk {
     volume_id = libvirt_volume.rhel_image_master.id
   }
-  disk {
-    volume_id = libvirt_cloudinit_disk.commoninit.id
-  }
+  
+  cloudinit = "${libvirt_cloudinit_disk.commoninit.id}"
+
   graphics {
     type = "vnc"
     listen_type = "address"
@@ -59,9 +59,7 @@ resource "libvirt_domain" "k8s_node1" {
   disk {
     volume_id = libvirt_volume.rhel_image_node1.id
   }
-  disk {
-    volume_id = libvirt_cloudinit_disk.commoninit.id
-  }
+  cloudinit = "${libvirt_cloudinit_disk.commoninit.id}"
   graphics {
     type = "vnc"
     listen_type = "address"
@@ -79,9 +77,7 @@ resource "libvirt_domain" "k8s_node2" {
   disk {
     volume_id = libvirt_volume.rhel_image_node2.id
   }
-  disk {
-    volume_id = libvirt_cloudinit_disk.commoninit.id
-  }
+  cloudinit = "${libvirt_cloudinit_disk.commoninit.id}"
   graphics {
     type = "vnc"
     listen_type = "address"

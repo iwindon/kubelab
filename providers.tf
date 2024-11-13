@@ -9,11 +9,12 @@ terraform {
 }
 
 provider "libvirt" {
-  uri = "qemu+ssh://root@saturn.home.therootuser.com/system"
+  #uri = "qemu+ssh://root@saturn.home.therootuser.com/system"
+  uri = "qemu:///system"
 }
 
-resource "null_resource" "set_env" {
-  provisioner "local-exec" {
-    command = "setx LIBVIRT_DEFAULT_URI qemu+ssh://root@saturn.home.therootuser.com/system && setx LIBVIRT_SSH_KNOWN_HOSTS %USERPROFILE%\\.ssh\\known_hosts"
-  }
-}
+# resource "null_resource" "set_env" {
+#   provisioner "local-exec" {
+#     command = "setx LIBVIRT_DEFAULT_URI qemu+ssh://root@saturn.home.therootuser.com/system && setx LIBVIRT_SSH_KNOWN_HOSTS %USERPROFILE%\\.ssh\\known_hosts"
+#   }
+#}
